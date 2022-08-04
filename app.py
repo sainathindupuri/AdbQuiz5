@@ -1,3 +1,4 @@
+from locale import currency
 import string
 import time
 import pyodbc
@@ -69,14 +70,58 @@ def Question10ab():
 
     return render_template('Question10ab.html', data = freqCountList,count = sum, pieChart = files)  
 
-# @app.route('/Question11ab', methods=['GET', 'POST'])
-# def Question10ab():
-#     # cursor = connection.cursor()    
-#     rangeStart = int(request.form.get("rangeStart"))
-#     rangeEnd = int(request.form.get("rangeEnd"))
-    
+@app.route('/Question11ab', methods=['GET', 'POST'])
+def Question1qab():
+    # cursor = connection.cursor()    
+    rangeStart = (request.form.get("rangeStart"))
+    rangeEnd = (request.form.get("rangeEnd"))
 
-#     return render_template('Question11.html', data = freqCountList,count = sum, pieChart = files)  
+    cursor = connection.cursor()    
+   
+    query_str1 = "select store,sum(num) from f where store>="+rangeStart+" and store<="+rangeEnd+" group by store"
+    query_str2 = "select store,sum(num) from f  group by store"
+    cursor.execute(query_str1)    
+    data1 = cursor.fetchall()
+    cursor.execute(query_str2)
+    data2 = cursor.fetchall()
+    labels1=[]
+    heights1 = []
+    labels2=[]
+    heights2 = []
+    for i in data1:
+        labels1.append(i[0])
+        heights1.append(i[1])
+
+    for i in data2:        
+        labels2.append(i[0])
+        heights2.append(i[1])
+
+
+    plt.bar(labels1, heights1, color=['blue'])
+    plt.xlabel("Earthquake Type")
+    plt.ylabel("Earthquake Count")
+    plt.title("Earthquake count based on Type")
+    figfile = io.BytesIO()
+    plt.savefig(figfile, format='jpeg')
+    plt.close()
+    figfile.seek(0)
+    figdata_jpeg = base64.b64encode(figfile.getvalue())
+    files1 = figdata_jpeg.decode('utf-8')
+
+
+
+    plt.bar(labels2, heights2, color=['blue'])
+    plt.xlabel("Earthquake Type")
+    plt.ylabel("Earthquake Count")
+    plt.title("Earthquake count based on Type")
+    figfile = io.BytesIO()
+    plt.savefig(figfile, format='jpeg')
+    plt.close()
+    figfile.seek(0)
+    figdata_jpeg = base64.b64encode(figfile.getvalue())
+    files2 = figdata_jpeg.decode('utf-8')
+
+    return render_template('Question11.html', output1 = files1, output2=files2)  
 
 @app.route('/', methods=['POST', 'GET'])
 def Hello():
