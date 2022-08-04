@@ -35,13 +35,18 @@ def Question10ab():
     all_freq["Alphabet"] = 0
     all_freq["Number"] = 0
     all_freq["Punctuation"] = 0
-    for i in inputText:
+    print(inputText)
+    for element in range(0, len(inputText)):
+        i = inputText[element]
         if i.isalpha():
             all_freq["Alphabet"] += 1
-        elif i.isnumeric():
-            all_freq["Number"] = +1
+        elif i.isdigit():
+            all_freq["Number"] +=1
         elif i == "." or i=="," or i=="?" or i=="!" or i=="$" or i =="*":
             all_freq["Punctuation"]+=1
+    # print(string_name[element])
+    # for i in inputText:
+        
     
     print("freq is ",all_freq)
     sum = 0
