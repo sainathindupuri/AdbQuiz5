@@ -69,6 +69,15 @@ def Question10ab():
 
     return render_template('Question10ab.html', data = freqCountList,count = sum, pieChart = files)  
 
+# @app.route('/Question11ab', methods=['GET', 'POST'])
+# def Question10ab():
+#     # cursor = connection.cursor()    
+#     rangeStart = int(request.form.get("rangeStart"))
+#     rangeEnd = int(request.form.get("rangeEnd"))
+    
+
+#     return render_template('Question11.html', data = freqCountList,count = sum, pieChart = files)  
+
 @app.route('/', methods=['POST', 'GET'])
 def Hello():
     return render_template('index.html')
