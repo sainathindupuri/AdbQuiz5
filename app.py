@@ -39,7 +39,7 @@ def Question10ab():
         if i.isalpha():
             all_freq["Alphabet"] += 1
         elif i.isnumeric():
-            all_freq["Number"] = 1
+            all_freq["Number"] = +1
         elif i == "." or i=="," or i=="?" or i=="!" or i=="$" or i =="*":
             all_freq["Punctuation"]+=1
     
