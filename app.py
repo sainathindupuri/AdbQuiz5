@@ -132,24 +132,26 @@ def Hello():
 
 @app.route('/Question12ab', methods=['GET', 'POST'])
 def Question12ab():
-    quake_depth = []
-    mag = []
-    cursor.execute("select top 500 depth from [all_month]")
-    for data in cursor:
-        for value in data:
-            quake_depth.append(value)
+    
+    cursor = connection.cursor()    
+    
+    query_str = "select * from p"
+    cursor.execute(query_str)    
+    data = cursor.fetchall()
+    x =[]
+    y = []
+    colors =[]
+    for i in data:
+       x.append(i[0])
+       y.append(i[1])
+       colors.append(i[2])    
 
-    cursor.execute("select top 500 mag from [all_month]")
-    for data in cursor:
-        for value in data:
-            mag.append(value)
-
-    viridis = cm.get_cmap('viridis', 12)
-    colors = viridis(np.linspace(0, 1, len(quake_depth)))
-    plt.scatter(quake_depth, mag, c=colors)
-    plt.xlabel("Earthquake Depth")
-    plt.ylabel("Earthquake Magnitude")
-    plt.title("Graph of Earthquake Depth Vs Earthquake Magnitude")
+    
+   
+    plt.scatter(x, y, c=colors)
+    plt.xlabel("X")
+    plt.ylabel("Y")
+    plt.title("Graph")
     figfile = io.BytesIO()
     plt.savefig(figfile, format='jpeg')
     plt.close()
@@ -157,7 +159,7 @@ def Question12ab():
     figdata_jpeg = base64.b64encode(figfile.getvalue())
     files = figdata_jpeg.decode('utf-8')
 
-    return render_template("earthquake_magdepth.html", output = files)
+    return render_template("Question12ab.html", output = files)
     
 
 if __name__ == '__main__':    
