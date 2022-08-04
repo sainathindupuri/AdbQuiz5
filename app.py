@@ -56,15 +56,19 @@ def Question10ab():
     labels =list(all_freq.keys())
     for i in labels:
         sum = sum+all_freq[i]
+        
         freqCountList.append((i,all_freq[i]))
+    labellist = []
+    for i in range(len(freqCountList)):
+        a = (freqCountList[i][1]/sum)*100
+        percentageList.append(a)
+        labellist.append(labels[i]+" "+str(a)+"%")
     
-    for i in freqCountList:
-        percentageList.append((i[1]/sum)*100)
     
     colors = ['#ff6666', '#ffcc99', '#99ff99']
     print("labels",labels)
     print("percentage",percentageList)
-    plt.pie(percentageList, labels=labels, colors=colors)
+    plt.pie(percentageList, labels=labellist, colors=colors)
     figfile = io.BytesIO()
     plt.savefig(figfile, format='jpeg')
     plt.close()
