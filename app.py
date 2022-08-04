@@ -23,6 +23,52 @@ cursor = connection.cursor()
 
 
 
+
+
+@app.route('/Question10ab', methods=['GET', 'POST'])
+def Question10ab():
+    # cursor = connection.cursor()    
+    inputText = (request.form.get("inputText")).replace(" ", "")
+    inputText = inputText.lower()
+    all_freq = {}
+    all_freq["Alphabet"] = 0
+    all_freq["Number"] = 0
+    all_freq["Punctuation"] = 0
+    for i in inputText:
+        if i.isalpha():
+            all_freq["Alphabet"] += 1
+        elif i.isnumeric():
+            all_freq["Number"] = 1
+        elif i == "." or i=="," or i=="?" or i=="!" or i=="$" or i =="*":
+            all_freq["Punctuation"]+=1
+    
+    print("freq is ",all_freq)
+    sum = 0
+    labels = []
+    percentageList = []
+    freqCountList = []
+    labels =list(all_freq.keys())
+    for i in labels:
+        sum = sum+all_freq[i]
+        freqCountList.append((i,all_freq[i]))
+    
+    for i in freqCountList:
+        percentageList.append((i[1]/sum)*100)
+    
+    colors = ['#ff6666', '#ffcc99', '#99ff99']
+    print("labels",labels)
+    print("percentage",percentageList)
+    plt.pie(percentageList, labels=labels, colors=colors)
+    figfile = io.BytesIO()
+    plt.savefig(figfile, format='jpeg')
+    plt.close()
+    figfile.seek(0)
+    figdata_jpeg = base64.b64encode(figfile.getvalue())
+    files = figdata_jpeg.decode('utf-8')
+    # plt.show()
+
+    return render_template('Question10ab.html', data = freqCountList,count = sum, pieChart = files)  
+
 @app.route('/', methods=['POST', 'GET'])
 def Hello():
     return render_template('index.html')
