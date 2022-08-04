@@ -98,9 +98,9 @@ def Question1qab():
 
 
     plt.bar(labels1, heights1, color=['blue'])
-    plt.xlabel("Earthquake Type")
-    plt.ylabel("Earthquake Count")
-    plt.title("Earthquake count based on Type")
+    plt.xlabel("Stores")
+    plt.ylabel("Amount of food")
+    plt.title("Total amount of foods for each store in entered range")
     figfile = io.BytesIO()
     plt.savefig(figfile, format='jpeg')
     plt.close()
@@ -111,9 +111,9 @@ def Question1qab():
 
 
     plt.bar(labels2, heights2, color=['blue'])
-    plt.xlabel("Earthquake Type")
-    plt.ylabel("Earthquake Count")
-    plt.title("Earthquake count based on Type")
+    plt.xlabel("Stores")
+    plt.ylabel("Amount of food")
+    plt.title("Total amount of foods for all in entered range")
     figfile = io.BytesIO()
     plt.savefig(figfile, format='jpeg')
     plt.close()
